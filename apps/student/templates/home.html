@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная страница{% endblock %}
+
+{% block styles %}
+<style>
+    body {
+        text-align: center;
+        padding-top: 10px; /* Уменьшено с 20px до 10px */
+        height: 20vh; /* Высота всего экрана */
+
+    }
+    .navigation {
+        margin-bottom: 20px;
+        padding: 35px;
+        display: inline-block;
+    }
+    .navigation a {
+        text-decoration: none;
+        color: #333;
+        margin: 0 10px;
+        padding: 20px 100px;
+        border-radius: 40px;
+        transition: background-color 0.3s;
+    }
+    .navigation a:hover {
+        background-color: #ddd;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    <h1>Главная страница</h1>
+    <div class="navigation">
+        <a href="{% url 'tariff_list' %}">Tariff</a>
+        <a href="{% url 'register' %}">Create New Student</a>
+        <a href="{% url 'user_list' %}">Student</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %}Тарифы{% endblock %}
+
+{% block styles %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f7f7f7;
+        margin: -100px;
+        padding: 0;
+        text-align: center;
+    }
+    .card {
+        box-shadow: 0 0px 4px rgba(0, 0, 0, 0.1);
+        margin-top: 10px; /* Уменьшен верхний внешний отступ */
+    }
+    .card-header {
+        background-color: #4CAF50;
+        color: white;
+        padding: 20px;
+        font-size: 1.5rem;
+    }
+    .card-body {
+        padding: 20px;
+    }
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 20px;
+        border: 2px solid #ddd;
+        text-align: left;
+        background-color: #fff;
+    }
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .navigation {
+        text-align: center;
+        margin-bottom: 20px;
+        display: inline-block;
+    }
+    .navigation a {
+        text-decoration: none;
+        color: #333;
+        margin: 0 50px;
+        padding: 20px;
+
+        border-radius: 30px;
+        transition: background-color 0.3s;
+    }
+    .navigation a:hover {
+        background-color: #ddd;
+    }
+    a.btn {
+        color: #333; /* Цвет текста кнопки */
+        background-color: #fff; /* Фон кнопки */
+        border: 1px solid #ddd; /* Граница кнопки */
+        padding: 8px 16px; /* Отступы внутри кнопки */
+        border-radius: 20px; /* Закругление углов */
+        transition: background-color 0.3s, box-shadow 0.3s; /* Плавность перехода */
+        text-decoration: none; /* Убрать подчеркивание текста */
+        display: inline-block; /* Сделать кнопку строчно-блочным элементом */
+    }
+
+    a.btn:hover {
+        background-color: #e7e7e7; /* Фон кнопки при наведении */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Тень кнопки при наведении */
+        text-decoration: none; /* Убрать подчеркивание текста */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="navigation">
+    <a href="{% url 'tariff_list' %}">Tariff</a>
+    <a href="{% url 'register' %}">Create New Student</a>
+    <a href="{% url 'user_list' %}">Student</a>
+</div>
+<div class="container">
+    <div class="card">
+
+        <div class="card-header">
+            Тарифы
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tariff in tariffs %}
+                    <tr>
+                        <td><a href="{% url 'tariff_view' tariff.pk %}" class="btn btn-warning btn-sm">{{ tariff.name }}</a></td>
+                        <td>{{ tariff.price }}</td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+
+{% block title %}Список пользователей{% endblock %}
+
+{% block styles %}
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f7f7f7;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
+    h2 {
+        color: #333;
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+    }
+    table {
+        margin: 20px auto;
+        border-collapse: collapse;
+        width: 90%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    th, td {
+        padding: 15px;
+        border: 1px solid #ddd;
+        text-align: left;
+        background-color: #fff;
+    }
+    th {
+        background-color: #4CAF50;
+        color: white;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    img {
+        max-height: 50px;
+        width: auto;
+        border-radius: 50%;
+    }
+    a {
+        color: #000000;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    a:hover {
+        background-color: #ddd;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    .name-cell {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        min-width: 160px; /* Минимальная ширина для имени, чтобы избежать переноса */
+    }
+    .action-buttons {
+        display: flex;
+        justify-content: center; /* Выравниваем кнопки по центру */
+        gap: 10px; /* Расстояние между кнопками */
+    }
+
+    .navigation {
+        text-align: center;
+        padding: 10px; /* Уменьшено с 20px до 10px */
+        margin-bottom: 20px;
+        display: inline-block;
+        padding-top: 0; /* Set padding-top to 0 or a smaller value */
+        margin-top: 0; 
+    }
+    .navigation a {
+        text-decoration: none;
+        color: #333;
+        margin: 0 10px;
+        padding: 20px 100px;
+        border-radius: 40px;
+        transition: background-color 0.3s;
+    }
+    .navigation a:hover {
+        background-color: #ddd;
+    }
+    .user-photo {
+        width: 50px; /* Фиксированная ширина */
+        height: 50px; /* Фиксированная высота */
+        object-fit: cover; /* Обрезка изображения по контейнеру */
+        border-radius: 50%; /* Круглая форма */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <div class="navigation">
+        <a href="{% url 'tariff_list' %}">Tariff</a>
+        <a href="{% url 'register' %}">Create New Student</a>
+        <a href="{% url 'user_list' %}">Student</a>
+    </div>
+    <h2>Список пользователей</h2>
+    <table>
+        <tr>
+            <th>Полное имя</th>
+            <th>Класс</th>
+            <th>Адрес</th>
+            <th>Телефон</th>
+            <th>Логин</th>
+            <th>Фото</th>
+            <th>Телефон родителей</th>
+            <th>Имя родителей</th>
+            <th>Тариф</th>
+            <th>Стоимость обучения</th>
+            <th>Баланс</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td class="name-cell"><a href="{% url 'user_profile' user.id %}">{{ user.full_name }}</a></td>
+            <td>{{ user.student_class }}</td>
+            <td>{{ user.address }}</td>
+            <td>{{ user.phone_number }}</td>
+            <td>{{ user.login }}</td>
+            <td>
+                {% if user.photo %}
+                    <img src="{{ user.photo.url }}" alt="Фото"  class="user-photo">
+                {% else %}
+                    Нет фото
+                {% endif %}
+            </td>
+            <td>{{ user.parents_number }}</td>
+            <td>{{ user.parents_name }}</td>
+            <td>{{ user.tariff }}</td>
+            <td>{{ user.tariff_price }}</td>
+            <td>{{ user.balance }}</td>
+
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

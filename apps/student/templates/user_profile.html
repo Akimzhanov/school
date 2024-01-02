@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block title %}Профиль пользователя{% endblock %}
+
+{% block styles %}
+<style>
+    .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .profile-photo {
+        flex-shrink: 0; 
+        width: 200px;
+        height: 200px;
+        border-radius: 100px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin-bottom: 25px;
+    }
+    .user-info {
+        background: white;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        border-collapse: separate;
+        border-spacing: 0;
+        overflow: hidden;
+
+    }
+    th, td {
+        padding: 10px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f9f9f9;
+        color: #333;
+        font-weight: normal;
+        border-right: 1px solid #ddd;
+    }
+    tr:last-child th, tr:last-child td {
+        border-bottom: none;
+    }
+    td {
+        background-color: #ffffff;
+    }
+    .action-buttons {
+        display: flex;
+        justify-content: center; /* Выравниваем кнопки по центру */
+        gap: 10px; /* Расстояние между кнопками */
+        padding-top: 20px; /* Добавляем отступ сверху */
+
+    }
+    .button {
+        text-decoration: none;
+        padding: 5px 15px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        color: white;
+        border: 1px solid transparent;
+        text-align: center;
+    }
+    .button.edit {
+        background-color: #4CAF50;
+    }
+    .button.edit:hover {
+        background-color: #66bb6a;
+    }
+    .button.delete {
+        background-color: #f44336;
+    }
+    .button.delete:hover {
+        background-color: #ef5350;
+    }
+    .profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This will cover the area without stretching the image */
+    border-radius: 100%; /* This ensures the image is round */
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    <div class="profile-container">
+        <div class="profile-photo">
+            <!-- Ссылка на изображение пользователя -->
+            {% if user.photo %}
+            <img src="{{ user.photo.url }}" alt="Фото пользователя" />
+            {% else %}
+                Нет фото
+            {% endif %}
+        </div>
+        <table class="user-info">
+            <!-- Таблица с информацией пользователя -->
+            <tr>
+                <th>Имя</th>
+                <td>{{ user.full_name }}</td>
+            </tr>
+            <tr>
+                <th>Класс</th>
+                <td>{{ user.student_class }}</td>
+            </tr>
+            <tr>
+                <th>Адрес</th>
+                <td>{{ user.address }}</td>
+            </tr>
+            <tr>
+                <th>Телефон</th>
+                <td>{{ user.phone_number }}</td>
+            </tr>
+            <tr>
+                <th>Логин</th>
+                <td>{{ user.login }}</td>
+            </tr>
+            <tr>
+                <th>Телефон родителей</th>
+                <td>{{ user.parents_number }}</td>
+            </tr>
+            <tr>
+                <th>Имя родителей</th>
+                <td>{{ user.parents_name }}</td>
+            </tr>
+            <tr>
+                <th>Тариф</th>
+                <td>{{ user.tariff }}</td>
+            </tr>
+            <tr>
+                <th>Стоимость обучения</th>
+                <td>{{ user.tariff_price }}</td>
+            </tr>
+            <tr>
+                <th>Баланс</th>
+                <td>{{ user.balance }}</td>
+            </tr>
+        </table>
+        <td>
+        <div class="action-buttons">
+            <a href="{% url 'update_user' user.id %}" class="button edit">Редактировать</a>
+            <a href="{% url 'delete_user' user.id %}" class="button delete">Удалить</a>
+        </div>
+        </td>
+    </div>
+</form>
+{% endblock %}
